@@ -1,0 +1,22 @@
+{
+  "name": "gulp-build",
+  "version": "1.0.0",
+  "description": "Using Gulp to Build a Front-End Website from Techdegree and Treehouse",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chris-gaona/gulp-build.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chris-gaona/gulp-build/issues"
+  },
+  "homepage": "https://github.com/chris-gaona/gulp-build#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
