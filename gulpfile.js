@@ -6,7 +6,8 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),
     cssmin = require('gulp-clean-css'),
-    maps = require('gulp-sourcemaps');
+    maps = require('gulp-sourcemaps'),
+    imagemin = require('gulp-imagemin');;
 
 // As a developer, when I run the gulp scripts or gulp styles commands at the command line, source maps are generated for the JavaScript and CSS files respectively.
 
@@ -44,6 +45,13 @@ gulp.task('styles', ['compileSass'], function () {
   .pipe(cssmin())
   .pipe(rename('all.min.css'))
   .pipe(gulp.dest('dist/styles'));
+});
+
+// As a developer, I should be able to run the gulp images command at the command line to optimize the size of the project’s JPEG and PNG files, and then copy those optimized images to the dist/content folder.
+gulp.task('images', function () {
+  gulp.src('images/*')
+  .pipe(imagemin())
+  .pipe(gulp.dest('dist/content'))
 });
 
 gulp.task('default', function () {
