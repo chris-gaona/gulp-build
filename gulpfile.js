@@ -8,12 +8,21 @@ var gulp = require('gulp'),
     cssmin = require('gulp-clean-css'),
     maps = require('gulp-sourcemaps'),
     imagemin = require('gulp-imagemin'),
-    del = require('del');
+    del = require('del'),
+    eslint = require('gulp-eslint');
+
+// As a developer, when I run the gulp scripts command at the command line, all of my project’s JavaScript files will be linted using ESLint and if there’s an error, the error will output to the console and the build process will be halted.
+gulp.task('lint', function () {
+  return gulp.src(['js/**/*.js', '!node_modules/**'])
+  .pipe(eslint())
+  .pipe(eslint.format())
+  .pipe(eslint.failOnError());
+});
 
 // As a developer, when I run the gulp scripts or gulp styles commands at the command line, source maps are generated for the JavaScript and CSS files respectively.
 
 // As a developer, I should be able to run the gulp scripts command at the command line to concatenate, minify, and copy all of the project’s JavaScript files into an all.min.js file that is then copied to the dist/scripts folder.
-gulp.task('concatScripts', function () {
+gulp.task('concatScripts', ['lint'], function () {
   return gulp.src([
     'js/global.js',
     'js/circle/autogrow.js',
