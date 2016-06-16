@@ -57,8 +57,8 @@ gulp.task('images', function () {
 
 // watch for changes to sass & js files & automatically compile and minify
 gulp.task('watch', function () {
-  gulp.watch(['sass/**/*.scss', 'sass/**/*.sass'], ['styles']);
-  gulp.watch(['js/**/*.js'], ['scripts']);
+  gulp.watch(['sass/**/*.scss', 'sass/**/*.sass'], ['compileSass']);
+  gulp.watch(['js/**/*.js'], ['concatScripts']);
 });
 
 // As a developer, I should be able to run the gulp clean command at the command line to delete all of the files and folders in the dist folder.
