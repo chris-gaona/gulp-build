@@ -5,7 +5,8 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),
-    cssmin = require('gulp-clean-css');
+    cssmin = require('gulp-clean-css'),
+    maps = require('gulp-sourcemaps');
 
 // As a developer, when I run the gulp scripts or gulp styles commands at the command line, source maps are generated for the JavaScript and CSS files respectively.
 
@@ -15,7 +16,9 @@ gulp.task('concatScripts', function () {
     'js/global.js',
     'js/circle/autogrow.js',
     'js/circle/circle.js'])
+  .pipe(maps.init())
   .pipe(concat('all.js'))
+  .pipe(maps.write('./'))
   .pipe(gulp.dest('js'));
 });
 
@@ -29,8 +32,10 @@ gulp.task('scripts', ['concatScripts'], function () {
 // As a developer, I should be able to run the gulp styles command at the command line to compile the project’s SCSS files into CSS, then concatenate and minify into an all.min.css file that is then copied to the dist/styles folder.
 gulp.task('compileSass', function () {
   gulp.src('sass/global.scss')
+  .pipe(maps.init())
   .pipe(sass())
   .pipe(rename('all.css'))
+  .pipe(maps.write('./'))
   .pipe(gulp.dest('css'));
 });
 
