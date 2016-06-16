@@ -54,8 +54,14 @@ gulp.task('images', function () {
   .pipe(gulp.dest('dist/content'))
 });
 
+// watch for changes to sass & js files & automatically compile and minify
+gulp.task('watch', function () {
+  gulp.watch(['sass/**/*.scss', 'sass/**/*.sass'], ['styles']);
+  gulp.watch(['js/**/*.js'], ['scripts']);
+});
+
 // As a developer, I should be able to run the gulp clean command at the command line to delete all of the files and folders in the dist folder.
-// TODO: 
+// TODO:
 
 // As a developer, I should be able to run the gulp build command at the command line to run the clean, scripts, styles, and images tasks with confidence that the clean task completes before the other commands.
 // TODO:
