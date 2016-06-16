@@ -14,7 +14,11 @@ var gulp = require('gulp'),
 // As a developer, when I run the gulp scripts command at the command line, all of my project’s JavaScript files will be linted using ESLint and if there’s an error, the error will output to the console and the build process will be halted.
 gulp.task('lint', function () {
   return gulp.src(['js/**/*.js', '!node_modules/**'])
-  .pipe(eslint())
+  .pipe(eslint({
+    'rules':{
+      'semi': [1, 'always']
+    }
+  }))
   .pipe(eslint.format())
   .pipe(eslint.failOnError());
 });
