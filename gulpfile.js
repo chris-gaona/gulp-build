@@ -7,7 +7,8 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     cssmin = require('gulp-clean-css'),
     maps = require('gulp-sourcemaps'),
-    imagemin = require('gulp-imagemin');;
+    imagemin = require('gulp-imagemin'),
+    del = require('del');
 
 // As a developer, when I run the gulp scripts or gulp styles commands at the command line, source maps are generated for the JavaScript and CSS files respectively.
 
@@ -61,11 +62,21 @@ gulp.task('watch', function () {
 });
 
 // As a developer, I should be able to run the gulp clean command at the command line to delete all of the files and folders in the dist folder.
-// TODO:
+gulp.task('clean', function() {
+  //delete dist folder contents before rebuilding
+  del(['dist', 'css/all.css*', 'js/all.js*']);
+});
 
 // As a developer, I should be able to run the gulp build command at the command line to run the clean, scripts, styles, and images tasks with confidence that the clean task completes before the other commands.
-// TODO:
-gulp.task('build', ['scripts', 'styles', 'images']);
+gulp.task('build', ['scripts', 'styles', 'images'], function () {
+  //{base:'./'} makes it so the build in dist uses
+  //the proper directories from dev environment
+  return gulp.src(['index.html', 'icons/**'], {base:'./'})
+  .pipe(gulp.dest('dist'));
+});
 
 // As a developer, I should be able to run the gulp command at the command line to run the “build” task.
-gulp.task('default', ['build']);
+// gulp.task('default', gulp.series('clean', 'build'));
+gulp.task('default', ['clean'], function () {
+  gulp.start('build');
+});
