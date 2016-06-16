@@ -9,7 +9,8 @@ var gulp = require('gulp'),
     maps = require('gulp-sourcemaps'),
     imagemin = require('gulp-imagemin'),
     del = require('del'),
-    eslint = require('gulp-eslint');
+    eslint = require('gulp-eslint'),
+    connect = require('gulp-connect');
 
 // As a developer, when I run the gulp scripts command at the command line, all of my project’s JavaScript files will be linted using ESLint and if there’s an error, the error will output to the console and the build process will be halted.
 gulp.task('lint', function () {
@@ -34,7 +35,8 @@ gulp.task('concatScripts', ['lint'], function () {
   .pipe(maps.init())
   .pipe(concat('all.js'))
   .pipe(maps.write('./'))
-  .pipe(gulp.dest('js'));
+  .pipe(gulp.dest('js'))
+  .pipe(connect.reload());
 });
 
 gulp.task('scripts', ['concatScripts'], function () {
@@ -51,7 +53,8 @@ gulp.task('compileSass', function () {
   .pipe(sass())
   .pipe(rename('all.css'))
   .pipe(maps.write('./'))
-  .pipe(gulp.dest('css'));
+  .pipe(gulp.dest('css'))
+  .pipe(connect.reload());
 });
 
 gulp.task('styles', ['compileSass'], function () {
@@ -68,11 +71,22 @@ gulp.task('images', function () {
   .pipe(gulp.dest('dist/content'))
 });
 
+// The gulp serve command builds and serves the project using a local web server.
+gulp.task('connect', function() {
+  connect.server({
+    port: 3000,
+    livereload: true
+  });
+});
+
 // watch for changes to sass & js files & automatically compile/concat
 gulp.task('watch', function () {
   gulp.watch(['sass/**/*.scss', 'sass/**/*.sass'], ['compileSass']);
   gulp.watch(['js/**/*.js'], ['concatScripts']);
 });
+
+// When running the gulp serve command, the scripts task is run and the current page is reloaded in the browser when a change is made to any JavaScript (*.js) file.
+gulp.task('serve', ['connect', 'watch']);
 
 // As a developer, I should be able to run the gulp clean command at the command line to delete all of the files and folders in the dist folder.
 gulp.task('clean', function() {
