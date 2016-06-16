@@ -55,7 +55,7 @@ gulp.task('images', function () {
   .pipe(gulp.dest('dist/content'))
 });
 
-// watch for changes to sass & js files & automatically compile and minify
+// watch for changes to sass & js files & automatically compile/concat
 gulp.task('watch', function () {
   gulp.watch(['sass/**/*.scss', 'sass/**/*.sass'], ['compileSass']);
   gulp.watch(['js/**/*.js'], ['concatScripts']);
@@ -68,7 +68,8 @@ gulp.task('clean', function() {
 });
 
 // As a developer, I should be able to run the gulp build command at the command line to run the clean, scripts, styles, and images tasks with confidence that the clean task completes before the other commands.
-gulp.task('build', ['scripts', 'styles', 'images'], function () {
+gulp.task('build', ['clean'], function () {
+  gulp.start(['scripts', 'styles', 'images']);
   //{base:'./'} makes it so the build in dist uses
   //the proper directories from dev environment
   return gulp.src(['index.html', 'icons/**'], {base:'./'})
@@ -77,6 +78,4 @@ gulp.task('build', ['scripts', 'styles', 'images'], function () {
 
 // As a developer, I should be able to run the gulp command at the command line to run the “build” task.
 // gulp.task('default', gulp.series('clean', 'build'));
-gulp.task('default', ['clean'], function () {
-  gulp.start('build');
-});
+gulp.task('default', ['build']);
