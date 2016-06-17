@@ -129,7 +129,7 @@ gulp.task('clean', function() {
   return del(['dist', 'css/all*.css*', 'js/all*.js*']);
 });
 
-// run the gulp build command at the command line
+// run the gulp execute command at the command line
 // uses clean task as a dependency so it is ran first
 gulp.task('execute', ['clean'], function () {
   // after clean task has ran....run scripts, styles, and images tasks
@@ -154,6 +154,7 @@ gulp.task('inject', function () {
   .pipe(gulp.dest('./dist'));
 });
 
+// run the gulp build command at the command line
 gulp.task('build', ['execute'], function () {
   // after build task is complete run the inject task
   gulp.start('inject');
