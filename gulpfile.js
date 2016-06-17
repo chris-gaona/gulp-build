@@ -131,7 +131,7 @@ gulp.task('clean', function() {
 
 // run the gulp build command at the command line
 // uses clean task as a dependency so it is ran first
-gulp.task('build', ['clean'], function () {
+gulp.task('execute', ['clean'], function () {
   // after clean task has ran....run scripts, styles, and images tasks
   gulp.start(['scripts', 'styles', 'images']);
   //{base:'./'} makes it so the build in dist uses
@@ -152,6 +152,11 @@ gulp.task('inject', function () {
   // sets relative option to true to remove the 'dist' part of the script tag
   return target.pipe(inject(gulp.src(['./dist/**/*.js', './dist/**/*.css'], {read: false}), {relative: true}))
   .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('build', ['execute'], function () {
+  // after build task is complete run the inject task
+  gulp.start('inject');
 });
 
 // run the gulp command at the command line to run the “build” task.
