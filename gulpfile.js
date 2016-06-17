@@ -92,7 +92,7 @@ gulp.task('watch', function () {
 // As a developer, I should be able to run the gulp clean command at the command line to delete all of the files and folders in the dist folder.
 gulp.task('clean', function() {
   //delete dist folder contents before rebuilding
-  del(['dist', 'css/all.css*', 'js/all.js*']);
+  del(['dist', 'css/all*.css*', 'js/all*.js*']);
 });
 
 // As a developer, I should be able to run the gulp build command at the command line to run the clean, scripts, styles, and images tasks with confidence that the clean task completes before the other commands.
@@ -113,7 +113,6 @@ gulp.task('inject', function () {
 });
 
 // As a developer, I should be able to run the gulp command at the command line to run the “build” task.
-// gulp.task('default', gulp.series('clean', 'build'));
 gulp.task('default', ['build'], function () {
   gulp.start(['inject']);
 });
