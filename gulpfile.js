@@ -22,6 +22,9 @@ gulp.task('lint', function () {
   // another task
   return gulp.src(['js/**/*.js', '!node_modules/**'])
   // always require semicolons where applicable
+  // uses "warn" or 1 to turn the rule on as a warning (doesn't affect exit code)
+  // to see the gulp process halt on error, change the following eslint rules to
+  // 'semi': ['error', 'always'] or to 'semi': [2, 'always']
   .pipe(eslint({
     'rules':{
       'semi': [1, 'always']
